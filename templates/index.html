@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header class="horizon">
+        <a href="#intro" class="title">Task<span id="title">Flow</span></a>
+        <ul class="list-items">
+            <li class="items"><a href="#why-taskflow">Why TaskFlow</a></li>
+            <li class="items"><a href="#about">About</a></li>
+            <li class="items"><a href="#signin">Sign In</a></li>
+            <li class="items"><a href="#signup">Sign Up</a></li>
+            <li class="items">
+                <button id="theme-toggle">
+                    🌙
+                </button>
+            </li>
+        </ul>
+    </header>
+    <main>
+        <section id="intro">
+            <div class="wrapper">
+                <button class="arrow left-arrow">
+                    &#10094;
+                </button>
+                <div class="slider">
+                    <div class="slides">
+                        <div class="scroll-card">
+                            <div class="heading">
+                                <span class="emoji">📅</span>
+                                Organize Your Day
+                            </div>
+                            <div class="subtitle">
+                                "A well-planned day leaves little room for chaos.
+                                Organize today, enjoy tomorrow."
+                            </div>
+                        </div>
+                        <div class="scroll-card">
+                            <div class="heading">
+                                <span class="emoji">📂</span>
+                                Categorize Your Work
+                            </div>
+                            <div class="subtitle">
+                                "Every task deserves its place.
+                                Categorize wisely, accomplish effortlessly."
+                            </div>
+                        </div>
+                        <div class="scroll-card">
+                            <div class="heading">
+                                <span class="emoji">⏰</span>
+                                Beat the Clock
+                            </div>
+                            <div class="subtitle">
+                                "Deadlines don't chase successful people.
+                                Successful people stay ahead of them."
+                            </div>
+                        </div>
+                        <div class="scroll-card">
+                            <div class="heading">
+                                <span class="emoji">🎯</span>
+                                Stay Focused
+                            </div>
+                            <div class="subtitle">
+                                "Small steps completed consistently become extraordinary achievements."
+                            </div>
+                        </div>
+                        <div class="scroll-card">
+                            <div class="heading">
+                                <span class="emoji">📈</span>
+                                Productivity
+                            </div>
+                            <div class="subtitle">
+                                "Don't count the hours.
+                                Make every hour count."
+                            </div>
+                        </div>
+                        <div class="scroll-card">
+                            <div class="heading">
+                                <span class="emoji">🚀</span>
+                                Success
+                            </div>
+                            <div class="subtitle">
+                                "The best feeling isn't finishing a task.
+                                It's finishing it before everyone else."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="arrow right-arrow">
+                    &#10095;
+                </button>
+            </div>
+        </section>
+    </main>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+
+</html>
