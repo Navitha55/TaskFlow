@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskFlow</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="icon" href="{% static 'favicon.jpg' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
@@ -19,8 +20,8 @@
         <ul class="list-items">
             <li class="items"><a href="#why-taskflow">Why TaskFlow</a></li>
             <li class="items"><a href="#about">About</a></li>
-            <li class="items"><a href="#signin">Sign In</a></li>
-            <li class="items"><a href="#signup">Sign Up</a></li>
+            <li class=" items"><a href="{% url 'signIn' %}">Sign In</a></li>
+            <li class=" items signup"><a href="{% url 'signUp' %}">Sign Up</a></li>
             <li class="items">
                 <button id="theme-toggle">
                     🌙
@@ -30,6 +31,13 @@
     </header>
     <main>
         <section id="intro">
+            <div class="hero-content">
+
+                <h1 class="hero-title">
+                    Master Your Day with <span>TaskFlow</span>
+                </h1>
+
+            </div>
             <div class="wrapper">
                 <button class="arrow left-arrow">
                     &#10094;
@@ -102,7 +110,128 @@
                 </button>
             </div>
         </section>
+        <section id="why-taskflow">
+            <div class="main-wrapper">
+                <div class="sec-title">
+                    Features
+                </div>
+                <div class="card-wrapper">
+                    <div class="card">
+                        <div class="heading">
+                            <span class="emoji">🗂️</span>
+                            Custom Categories
+                        </div>
+                        <div class="subtitle">
+                            Create categories that match your life. Separate your tasks
+                            into Work, Study, Personal, Fitness, Projects, or anything
+                            you choose.
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="heading">
+                            <span class="emoji">🔔</span>
+                            Smart Deadline Alerts
+                        </div>
+                        <div class="subtitle">
+                            Set deadlines for your tasks and get timely reminders so
+                            important work doesn't quietly slip through the cracks.
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="heading">
+                            <span class="emoji">🔥</span>
+                            Daily Streaks
+                        </div>
+                        <div class="subtitle">
+                            Complete your planned tasks every day, maintain your streak,
+                            and turn productivity into a habit worth keeping.
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="heading">
+                            <span class="emoji">📊</span>
+                            Productivity Analytics
+                        </div>
+                        <div class="subtitle">
+                            Track your progress through a simple dashboard. See completed
+                            tasks, pending work, category-wise activity, and productivity
+                            trends at a glance.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="about">
+            <div class="about-container">
+                <div class="about-content">
+                    <span class="about-tag">
+                        ✨ About TaskFlow
+                    </span>
+                    <h2 class="sec-title">
+                        More Than Just a <span>To-Do List</span>
+                    </h2>
+                    <p class="about-text">
+                        TaskFlow is a productivity platform designed to help you plan,
+                        organize, and accomplish your daily goals with confidence.
+
+                        From managing assignments and tracking deadlines to building
+                        productive habits, TaskFlow transforms scattered tasks into a
+                        structured workflow that keeps you focused every day.
+                    </p>
+                    <a href="{% url 'signUp' %}" class="about-btn">
+                        Start Your Journey →
+                    </a>
+                </div>
+                <div class="about-image">
+                    <img src="{% static 'about.png' %}" alt="TaskFlow">
+                </div>
+            </div>
+        </section>
     </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h2>
+                    Task<span>Flow</span>
+                </h2>
+                <p>
+                    Plan smarter. Stay focused. Achieve more every day with
+                    TaskFlow.
+                </p>
+                <div class="social-links">
+                    <a href="https://github.com/Navitha55" target="_blank">
+                        GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/navitha-sri-n?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                        target="_blank">
+                        LinkedIn
+                    </a>
+                    <a href="mailto:navithasrin75@gmail.com">
+                        Email
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <a href="#intro">Home</a>
+                <a href="#why-taskflow">Features</a>
+                <a href="#about">About</a>
+                <a href="#">Sign In</a>
+                <a href="#">Sign Up</a>
+            </div>
+            <div class="footer-links">
+                <h3>Resources</h3>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+                <a href="#">FAQ</a>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 TaskFlow • Crafted with ❤️ by
+            <strong>Navitha Sri</strong>
+        </div>
+    </footer>
     <script src="{% static 'script.js' %}"></script>
 </body>
 

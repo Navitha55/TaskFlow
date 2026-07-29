@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow | Dashboard</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+
+    <header class="dashboard-header">
+
+        <h1>TaskFlow</h1>
+
+        <a href="{% url 'logout' %}" class="logout-btn">
+            Logout
+        </a>
+
+    </header>
+
+
+    <main>
+
+        <h2>Welcome to your Dashboard 👋</h2>
+
+        <p>
+            Start organizing your tasks and make your day more productive.
+        </p>
+
+    </main>
+
+</body>
+
+</html>
