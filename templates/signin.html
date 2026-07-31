@@ -52,7 +52,8 @@
                         {% csrf_token %}
                         <input type="email" name="email" placeholder="Email" autocomplete="email" required>
                         <div class="password-field">
-                            <input type="password" name="password" id="login-password" placeholder="Password" required>
+                            <input type="password" name="password" id="login-password" placeholder="Password"
+                                autocomplete="password" required>
 
                             <button type="button" class="toggle-password"
                                 onclick="togglePassword('login-password', this)">

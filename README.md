@@ -1,111 +1,106 @@
 # TaskFlow 🚀
 
-TaskFlow is a productivity-focused task management web application designed to help users organize their daily activities, manage deadlines, and build consistent productivity habits.
+TaskFlow is a productivity-focused task management web application built with Django. It helps users organize tasks, manage priorities and deadlines, and receive email reminders for important activities.
 
-The project started as a simple To-Do List landing page and is gradually evolving into a complete Django-based task management application.
+The project started as a simple To-Do List landing page and has gradually evolved into a complete Django-based task management application.
 
-TaskFlow provides individual user accounts so that each user can securely manage their own tasks and productivity activities.
+TaskFlow provides individual user accounts so that each user can securely manage their own tasks.
 
 ---
 
-## 🌟 Current Progress
+## 📌 Project Status
 
-TaskFlow is being developed incrementally.
+### Phase 1 — Completed ✅
 
-### ✅ Completed
+The first development phase of TaskFlow has been successfully completed.
 
-- Responsive landing page
-- TaskFlow introduction and feature sections
-- About section
-- Light/Dark theme support
-- Authentication interface
+Phase 1 focused on building the core task management system, authentication, database integration, and task reminder functionality.
+
+---
+
+## 🌟 Phase 1 Features
+
+### 🔐 Authentication
+
 - User registration
 - User login
 - User logout
 - Django session-based authentication
-- Password change / forgot-password functionality
+- Protected dashboard access
+- Password change functionality
+- Forgot-password functionality
 - Password confirmation validation
 - Unique email validation during registration
-- Authentication messages for success and error states
-- Protected dashboard access
-- Environment variable configuration using `django-environ`
-- MySQL database integration
-
-### 🚧 In Development
-
-- Task creation
-- Task editing
-- Task deletion
-- Task completion tracking
-- Custom task categories
-- Task priorities
-- Deadline management
-- Reminder/notification system
-- Productivity streaks
-- Dashboard analytics
-- User-specific task management
-
----
-
-## ✨ Planned Features
+- Authentication success and error messages
+- Session persistence using cookies
 
 ### 📝 Task Management
 
-Users will be able to:
+Users can:
 
 - Create tasks
 - Edit tasks
 - Delete tasks
 - Mark tasks as completed
 - View pending and completed tasks
+- Manage task descriptions
+- Assign due dates
+- Assign task priorities
+- Assign task categories
 
-### 📂 Custom Categories
+### 📂 Task Categories
 
-Users can create categories according to their needs, such as:
+TaskFlow currently supports predefined categories such as:
 
+- Daily
 - Work
 - Study
+- Health
+- Finance
+- Shopping
 - Personal
-- Fitness
-- Projects
+- Other
 
-### ⏰ Deadline Reminders
+### 🎯 Task Priorities
 
-Users will be able to assign deadlines to tasks and receive reminders for important activities.
+Each task can have one of three priority levels:
 
-### 🔥 Productivity Streaks
+- High
+- Medium
+- Low
 
-TaskFlow will encourage consistency by tracking daily task completion and maintaining productivity streaks.
+### ⏰ Task Reminders
 
-### 📊 Dashboard Analytics
+Users can assign a reminder date and time to a task.
 
-The dashboard will provide insights into productivity, including:
+TaskFlow includes an automated email reminder system that:
 
-- Completed tasks
-- Pending tasks
-- Daily progress
-- Completion statistics
-- Productivity trends
+- Checks tasks whose reminder time has been reached
+- Sends reminder emails to the user's registered email address
+- Includes task information in the reminder email
+- Prevents the same reminder from being sent repeatedly
 
----
+### 🗄️ Database Integration
 
-## 🔐 Authentication
+TaskFlow uses MySQL for storing:
 
-TaskFlow uses Django's built-in authentication system.
+- User accounts
+- Tasks
+- Categories
+- Task priorities
+- Task status
+- Reminder information
+- Task creation and update timestamps
 
-Current authentication functionality includes:
+### 🌐 Responsive UI
 
-- User registration
-- Secure password hashing
-- User login
-- User logout
-- Password change
-- Email uniqueness validation
-- Password confirmation
-- Session-based authentication
-- Protected dashboard access
+The application includes a responsive interface for:
 
-Each user's tasks will be associated with their authenticated account.
+- Desktop
+- Tablet
+- Mobile
+
+The dashboard includes a persistent sidebar navigation and responsive task layouts.
 
 ---
 
@@ -129,6 +124,13 @@ Each user's tasks will be associated with their authenticated account.
 ### Authentication
 
 - Django Authentication System
+- Django Sessions
+- Cookies
+
+### Email
+
+- Django Email Backend
+- Gmail SMTP
 
 ### Environment Management
 
@@ -148,7 +150,12 @@ Each user's tasks will be associated with their authenticated account.
 TaskFlow/
 │
 ├── TaskFlowApp/
+│   ├── management/
+│   │   └── commands/
+│   │       └── send_task_reminders.py
+│   │
 │   ├── migrations/
+│   ├── templates/
 │   ├── admin.py
 │   ├── apps.py
 │   ├── models.py
@@ -169,8 +176,12 @@ TaskFlow/
 ├── templates/
 │   ├── index.html
 │   ├── signin.html
+│   ├── signup.html
 │   ├── forgot.html
-│   └── dashboard.html
+│   ├── dashboard.html
+│   ├── add_task.html
+│   ├── edit_task.html
+│   └── ...
 │
 ├── .env.example
 ├── .gitignore

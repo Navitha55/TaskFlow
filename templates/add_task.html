@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow | Add Task</title>
+
+    <link rel="stylesheet" href="{% static 'app.css' %}">
+    <link rel="icon" href="{% static 'favicon.jpg' %}">
+
+</head>
+
+<body>
+
+    <div class="form-page">
+
+        <div class="form-container">
+
+            <div class="form-header">
+
+                <a href="{% url 'my_tasks' %}" class="back-link">
+                    ← Back to My Tasks
+                </a>
+
+                <h1>Add New Task</h1>
+
+                <p>
+                    Create a task and keep your day organized.
+                </p>
+
+            </div>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <label for="title">
+                    Task Title
+                </label>
+
+                <input type="text" id="title" name="title" placeholder="Enter task title" required>
+
+
+                <label for="description">
+                    Description
+                </label>
+
+                <textarea id="description" name="description" placeholder="Describe your task..." rows="5"></textarea>
+
+
+                <label for="due_date">
+                    Due Date
+                </label>
+
+                <input type="date" id="due_date" name="due_date" required>
+
+
+                <label for="priority">
+                    Priority
+                </label>
+
+                <select id="priority" name="priority">
+                    {% for value, label in priority_choices %}
+                    <option value="{{ value }}">
+                        {{ label }}
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <label for="category">
+                    Category
+                </label>
+
+                <select id="category" name="category">
+
+                    {% for value, label in category_choices %}
+
+                    <option value="{{ value }}">
+                        {{ label }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <label for="reminder_datetime">
+                    Reminder
+                </label>
+
+                <input type="datetime-local" id="reminder_datetime" name="reminder_datetime">
+
+
+                <div class="form-buttons">
+
+                    <button type="submit" class="submit-btn">
+                        Add Task
+                    </button>
+
+                    <a href="{% url 'my_tasks' %}" class="cancel-btn">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

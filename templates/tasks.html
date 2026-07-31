@@ -1,0 +1,251 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow | My Tasks</title>
+
+    <link rel="stylesheet" href="{% static 'app.css' %}">
+    <link rel="icon" href="{% static 'favicon.jpg' %}">
+
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <aside class="side-bar">
+
+            <div class="brand">
+                <img src="{% static 'todologo.png' %}" alt="TaskFlow">
+                <span>TaskFlow</span>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <p class="nav-title">MAIN</p>
+
+                <a href="{% url 'dashboard' %}" class="nav-link">
+                    <span>🏠</span>
+                    <span>Overview</span>
+                </a>
+
+                <a href="{% url 'my_tasks' %}" class="nav-link active">
+                    <span>📝</span>
+                    <span>My Tasks</span>
+                </a>
+
+                <p class="nav-title">PRODUCTIVITY</p>
+
+                <a href="{% url 'calendar' %}" class="nav-link">
+                    <span>📅</span>
+                    <span>Calendar</span>
+                </a>
+
+                <a href="{% url 'analytics' %}" class="nav-link">
+                    <span>📊</span>
+                    <span>Analytics</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="{% url 'settings' %}" class="nav-link">
+                    <span>⚙️</span>
+                    <span>Settings</span>
+                </a>
+
+                <a href="{% url 'logout' %}" class="nav-link logout">
+                    <span>🚪</span>
+                    <span>Logout</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <main class="main-bar">
+
+            <header class="main-heading">
+
+                <div>
+
+                    <p class="welcome">
+                        My Tasks 📝
+                    </p>
+
+                    <p class="date">
+                        Manage everything you need to get done.
+                    </p>
+
+                </div>
+
+                <a href="{% url 'add_task' %}" class="add-task">
+                    + Add Task
+                </a>
+
+            </header>
+
+
+            <section class="main-context">
+
+                {% if messages %}
+
+                {% for message in messages %}
+
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+
+                {% endfor %}
+
+                {% endif %}
+
+
+                <div class="task-page-grid">
+
+                    {% for task in tasks %}
+
+                    <div class="task-card {% if task.status %}completed{% endif %}">
+
+                        <div class="task-card-header">
+
+                            <div>
+
+                                <h3>
+                                    {{ task.title }}
+                                </h3>
+
+                                <span class="priority {{ task.priority }}">
+                                    {{ task.get_priority_display }}
+                                </span>
+
+                            </div>
+
+                            {% if task.status %}
+
+                            <span class="status completed-status">
+                                ✅ Completed
+                            </span>
+
+                            {% else %}
+
+                            <span class="status pending-status">
+                                ⏳ Pending
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if task.description %}
+
+                        <p class="task-description">
+                            {{ task.description }}
+                        </p>
+
+                        {% endif %}
+
+
+                        <div class="task-details">
+
+                            <span>
+                                📂 {{ task.get_category_display }}
+                            </span>
+
+                            <span>
+                                📅 {{ task.due_date }}
+                            </span>
+
+                            {% if task.reminder_datetime %}
+
+                            <span>
+                                🔔 {{ task.reminder_datetime|date:"d M Y, h:i A" }}
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="task-actions">
+
+                            <form method="POST" action="{% url 'toggle_task' task.id %}">
+
+                                {% csrf_token %}
+
+                                <button type="submit">
+
+                                    {% if task.status %}
+                                    Mark Pending
+                                    {% else %}
+                                    Mark Complete
+                                    {% endif %}
+
+                                </button>
+
+                            </form>
+
+
+                            <a href="{% url 'edit_task' task.id %}">
+                                Edit
+                            </a>
+
+
+                            <form method="POST" action="{% url 'delete_task' task.id %}"
+                                onsubmit="return confirm('Delete this task?');">
+
+                                {% csrf_token %}
+
+                                <button type="submit" class="delete-btn">
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+
+                    {% empty %}
+
+                    <div class="empty-state">
+
+                        <div>
+                            📝
+                        </div>
+
+                        <h2>No tasks yet</h2>
+
+                        <p>
+                            Start organizing your day by creating your first task.
+                        </p>
+
+                        <a href="{% url 'add_task' %}">
+                            + Create Your First Task
+                        </a>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

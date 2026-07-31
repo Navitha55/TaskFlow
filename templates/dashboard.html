@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,32 +6,209 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskFlow | Dashboard</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'app.css' %}">
+    <link rel="icon" href="{% static 'favicon.jpg' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <div class="dashboard">
+        <aside class="side-bar">
 
-    <header class="dashboard-header">
+            <div class="brand">
+                <img src="{% static 'todologo.png' %}" alt="TaskFlow">
+                <span>TaskFlow</span>
+            </div>
 
-        <h1>TaskFlow</h1>
+            <nav class="sidebar-nav">
 
-        <a href="{% url 'logout' %}" class="logout-btn">
-            Logout
-        </a>
+                <p class="nav-title">MAIN</p>
 
-    </header>
+                <a href="{% url 'dashboard' %}" class="nav-link active">
+                    <span>🏠</span>
+                    <span>Overview</span>
+                </a>
+
+                <a href="{% url 'my_tasks' %}" class="nav-link">
+                    <span>📝</span>
+                    <span>My Tasks</span>
+                </a>
+
+                <p class="nav-title">PRODUCTIVITY</p>
+
+                <a href="{% url 'calendar' %}" class="nav-link">
+                    <span>📅</span>
+                    <span>Calendar</span>
+                </a>
+
+                <a href="{% url 'analytics' %}" class="nav-link">
+                    <span>📊</span>
+                    <span>Analytics</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="{% url 'settings' %}" class="nav-link">
+                    <span>⚙️</span>
+                    <span>Settings</span>
+                </a>
+
+                <a href="{% url 'logout' %}" class="nav-link logout">
+                    <span>🚪</span>
+                    <span>Logout</span>
+                </a>
+
+            </div>
+
+        </aside>
+        <main class="main-bar">
+            <header class="main-heading">
+                <div>
+                    <p class="welcome">Hello,{{ request.user.first_name|default:request.user.username }}👋</p>
+                    <p class="date">Here's what's happening with your tasks today.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-button" type="button">🔔</button>
+                    <div class="profile">
+                        <div class="profile-avatar">{{ request.user.first_name|first|upper }}</div>
+                        <div class="profile-info">
+                            <strong>{{ request.user.first_name|default:request.user.username }}</strong>
+                            <small>{{ request.user.email }}</small>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <section class="main-context">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">📝</div>
+                        <div>
+                            <p>Total Tasks</p>
+                            <h2>{{ total_tasks }}</h2>
+                            <small>Tasks created</small>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">✅</div>
+                        <div>
+                            <p>Completed</p>
+                            <h2>{{ completed_tasks }}</h2>
+                            <small>{{ completion_rate }}% completion rate</small>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange">⏰</div>
+                        <div>
+                            <p>Pending</p>
+                            <h2>{{ pending_tasks }}</h2>
+                            <small>Tasks remaining</small>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon purple">📈</div>
+                        <div>
+                            <p>Productivity</p>
+                            <h2>{{ completion_rate }}%</h2>
+                            <small>Overall completion</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="panel tasks-panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Today's Tasks</h2>
+                                <p>Stay focused on what matters.</p>
+                            </div>
+                            <a href="{% url 'add_task' %}" class="add-task">+ Add Task</a>
+                        </div>
+
+                        <div class="task-list">
+                            {% for task in today_tasks %} <!-- Outer tag is now FOR -->
+                            <div class="task-item {% if task.status %}completed{% endif %}">
+                                <form method="POST" action="{% url 'toggle_task' task.id %}">
+                                    {% csrf_token %}
+                                    {% if task.status %}
+                                    <input type="checkbox" checked onchange="this.form.submit()">
+                                    {% else %}
+                                    <input type="checkbox" onchange="this.form.submit()">
+                                    {% endif %}
+                                </form>
+                                <div class="task-content">
+                                    <strong>{{ task.title }}</strong>
+                                    <small>
+                                        {{ task.get_category_display }} ·
+                                        {% if task.status %}Completed{% else %}Today{% endif %} <!-- Safe inner IF -->
+                                    </small>
+                                </div>
+                                <span class="priority {{ task.priority }}">{{ task.get_priority_display }}</span>
+                            </div>
+                            {% empty %} <!-- Valid! Directly attaches to the outer FOR loop -->
+                            <div class="empty-task">
+                                <span>🎉</span>
+                                <p>No tasks for today.</p>
+                                <small>You're all caught up!</small>
+                            </div>
+                            {% endfor %}
+                        </div>
 
 
-    <main>
 
-        <h2>Welcome to your Dashboard 👋</h2>
-
-        <p>
-            Start organizing your tasks and make your day more productive.
-        </p>
-
-    </main>
-
+                    </div>
+                    <div class="panel productivity-panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Productivity</h2>
+                                <p>Your current progress</p>
+                            </div>
+                        </div>
+                        <div class="progress-circle" style="--progress: {{ completion_rate }}%;">
+                            <div class="circle-inner">
+                                <strong>{{ completion_rate }}%</strong>
+                                <span>Completed</span>
+                            </div>
+                        </div>
+                        <div class="progress-info">
+                            <div>
+                                <span>Completed</span>
+                                <strong>{{ completed_tasks }}</strong>
+                            </div>
+                            <div>
+                                <span>Remaining</span>
+                                <strong>{{ pending_tasks }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-grid">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Quick Actions</h2>
+                                <p>Manage your productivity.</p>
+                            </div>
+                        </div>
+                        <div class="quick-actions">
+                            <a href="{% url 'add_task' %}">📝<span>Add Task</span></a>
+                            <a href="{% url 'my_tasks' %}">📋<span>My Tasks</span></a>
+                            <a href="{% url 'calendar' %}">📅<span>Calendar</span></a>
+                        </div>
+                    </div>
+                    <div class="panel streak-panel">
+                        <div class="streak-icon">🚀</div>
+                        <div>
+                            <h2>Keep Going!</h2>
+                            <p>Complete your pending tasks and keep improving your productivity.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
 </body>
 
 </html>

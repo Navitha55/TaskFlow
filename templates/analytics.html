@@ -1,0 +1,208 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow | Analytics</title>
+
+    <link rel="stylesheet" href="{% static 'app.css' %}">
+    <link rel="icon" href="{% static 'favicon.jpg' %}">
+
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <aside class="side-bar">
+
+            <div class="brand">
+                <img src="{% static 'todologo.png' %}" alt="TaskFlow">
+                <span>TaskFlow</span>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <p class="nav-title">MAIN</p>
+
+                <a href="{% url 'dashboard' %}" class="nav-link">
+                    <span>🏠</span>
+                    <span>Overview</span>
+                </a>
+
+                <a href="{% url 'my_tasks' %}" class="nav-link">
+                    <span>📝</span>
+                    <span>My Tasks</span>
+                </a>
+
+                <p class="nav-title">PRODUCTIVITY</p>
+
+                <a href="{% url 'calendar' %}" class="nav-link">
+                    <span>📅</span>
+                    <span>Calendar</span>
+                </a>
+
+                <a href="{% url 'analytics' %}" class="nav-link active">
+                    <span>📊</span>
+                    <span>Analytics</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="{% url 'settings' %}" class="nav-link">
+                    <span>⚙️</span>
+                    <span>Settings</span>
+                </a>
+
+                <a href="{% url 'logout' %}" class="nav-link logout">
+                    <span>🚪</span>
+                    <span>Logout</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <main class="main-bar">
+
+            <header class="main-heading">
+
+                <div>
+                    <p class="welcome">Analytics 📊</p>
+
+                    <p class="date">
+                        Understand your productivity and task progress.
+                    </p>
+                </div>
+
+            </header>
+
+
+            <section class="main-context">
+
+                {% if messages %}
+                {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-icon blue">📝</div>
+                        <div>
+                            <p>Total Tasks</p>
+                            <h2>{{ total_tasks }}</h2>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green">✅</div>
+                        <div>
+                            <p>Completed</p>
+                            <h2>{{ completed_tasks }}</h2>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange">⏳</div>
+                        <div>
+                            <p>Pending</p>
+                            <h2>{{ pending_tasks }}</h2>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon purple">📈</div>
+                        <div>
+                            <p>Completion Rate</p>
+                            <h2>{{ completion_rate }}%</h2>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-grid">
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <div>
+                                <h2>Priority Breakdown</h2>
+                                <p>Tasks grouped by priority.</p>
+                            </div>
+                        </div>
+
+                        <div class="analytics-list">
+
+                            <div>
+                                <span>🔴 High</span>
+                                <strong>{{ high_priority }}</strong>
+                            </div>
+
+                            <div>
+                                <span>🟡 Medium</span>
+                                <strong>{{ medium_priority }}</strong>
+                            </div>
+
+                            <div>
+                                <span>🟢 Low</span>
+                                <strong>{{ low_priority }}</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <div>
+                                <h2>Categories</h2>
+                                <p>Your tasks by category.</p>
+                            </div>
+                        </div>
+
+                        <div class="analytics-list">
+
+                            {% for category, count in categories.items %}
+
+                            <div>
+                                <span>📂 {{ category }}</span>
+                                <strong>{{ count }}</strong>
+                            </div>
+
+                            {% empty %}
+
+                            <p>No category data available.</p>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

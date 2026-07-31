@@ -1,0 +1,159 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow | Edit Task</title>
+
+    <link rel="stylesheet" href="{% static 'app.css' %}">
+    <link rel="icon" href="{% static 'favicon.jpg' %}">
+
+</head>
+
+<body>
+
+    <div class="form-page">
+
+        <div class="form-container">
+
+            <div class="form-header">
+
+                <a href="{% url 'my_tasks' %}" class="back-link">
+                    ← Back to My Tasks
+                </a>
+
+                <h1>Edit Task</h1>
+
+                <p>
+                    Update your task details and keep your productivity on track.
+                </p>
+
+            </div>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- Title -->
+
+                <label for="title">
+                    Task Title
+                </label>
+
+                <input type="text" id="title" name="title" value="{{ task.title }}" placeholder="Enter task title"
+                    required>
+
+
+                <!-- Description -->
+
+                <label for="description">
+                    Description
+                </label>
+
+                <textarea id="description" name="description" placeholder="Describe your task..."
+                    rows="5">{{ task.description }}</textarea>
+
+
+                <!-- Due Date -->
+
+                <label for="due_date">
+                    Due Date
+                </label>
+
+                <input type="date" id="due_date" name="due_date" value="{{ task.due_date|date:'Y-m-d' }}" required>
+
+
+                <!-- Priority -->
+
+                <label for="priority">
+                    Priority
+                </label>
+
+                <select id="priority" name="priority">
+
+                    {% if task.priority == "low" %}
+                    <option value="low" selected>Low</option>
+                    {% else %}
+                    <option value="low">Low</option>
+                    {% endif %}
+
+                    {% if task.priority == "medium" %}
+                    <option value="medium" selected>Medium</option>
+                    {% else %}
+                    <option value="medium">Medium</option>
+                    {% endif %}
+
+                    {% if task.priority == "high" %}
+                    <option value="high" selected>High</option>
+                    {% else %}
+                    <option value="high">High</option>
+                    {% endif %}
+
+                </select>
+
+
+                <!-- Category -->
+
+                <label for="category">
+                    Category
+                </label>
+
+                <select id="category" name="category">
+
+                    {% for value, label in category_choices %}
+
+                    {% if task.category == value %}
+                    <option value="{{ value }}" selected>{{ label }}</option>
+                    {% else %}
+                    <option value="{{ value }}">{{ label }}</option>
+                    {% endif %}
+
+                    {% endfor %}
+
+                </select>
+
+
+                <!-- Reminder -->
+
+                <label for="reminder_datetime">
+                    Reminder
+                </label>
+
+                {% if task.reminder_datetime %}
+                <input type="datetime-local" id="reminder_datetime" name="reminder_datetime"
+                    value="{{ task.reminder_datetime|date:'Y-m-d\TH:i' }}">
+                {% else %}
+                <input type="datetime-local" id="reminder_datetime" name="reminder_datetime">
+                {% endif %}
+
+
+                <!-- Buttons -->
+
+                <div class="form-buttons">
+
+                    <button type="submit" class="submit-btn">
+                        Save Changes
+                    </button>
+
+                    <a href="{% url 'my_tasks' %}" class="cancel-btn">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

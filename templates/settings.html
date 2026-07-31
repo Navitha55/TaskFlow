@@ -1,0 +1,153 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow | Settings</title>
+
+    <link rel="stylesheet" href="{% static 'app.css' %}">
+    <link rel="icon" href="{% static 'favicon.jpg' %}">
+
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <aside class="side-bar">
+
+            <div class="brand">
+                <img src="{% static 'todologo.png' %}" alt="TaskFlow">
+                <span>TaskFlow</span>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <p class="nav-title">MAIN</p>
+
+                <a href="{% url 'dashboard' %}" class="nav-link">
+                    <span>🏠</span>
+                    <span>Overview</span>
+                </a>
+
+                <a href="{% url 'my_tasks' %}" class="nav-link">
+                    <span>📝</span>
+                    <span>My Tasks</span>
+                </a>
+
+                <p class="nav-title">PRODUCTIVITY</p>
+
+                <a href="{% url 'calendar' %}" class="nav-link">
+                    <span>📅</span>
+                    <span>Calendar</span>
+                </a>
+
+                <a href="{% url 'analytics' %}" class="nav-link">
+                    <span>📊</span>
+                    <span>Analytics</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="{% url 'settings' %}" class="nav-link active">
+                    <span>⚙️</span>
+                    <span>Settings</span>
+                </a>
+
+                <a href="{% url 'logout' %}" class="nav-link logout">
+                    <span>🚪</span>
+                    <span>Logout</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <main class="main-bar">
+
+            <header class="main-heading">
+
+                <div>
+                    <p class="welcome">Settings ⚙️</p>
+
+                    <p class="date">
+                        Manage your TaskFlow account.
+                    </p>
+                </div>
+
+            </header>
+
+
+            <section class="main-context">
+
+                {% if messages %}
+
+                {% for message in messages %}
+
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+
+                {% endfor %}
+
+                {% endif %}
+
+
+                <div class="panel settings-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h2>Profile Settings</h2>
+
+                            <p>
+                                Update your personal information.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <form method="POST" class="settings-form">
+
+                        {% csrf_token %}
+
+                        <label for="name">
+                            Name
+                        </label>
+
+                        <input type="text" id="name" name="name" value="{{ request.user.first_name }}" required>
+
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input type="email" id="email" name="email" value="{{ request.user.email }}" required>
+
+
+                        <button type="submit">
+                            Save Changes
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
